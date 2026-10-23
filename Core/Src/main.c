@@ -19,12 +19,13 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "icache.h"
+#include "usart.h"
 #include "gpio.h"
-#include "stm32h5xx_hal.h"
-#include "stm32h5xx_hal_gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+#include <stdio.h>
 
 /* USER CODE END Includes */
 
@@ -94,6 +95,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ICACHE_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -102,12 +104,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // if(HAL_GPIO_ReadPin(userButton_GPIO_Port, userButton_Pin) == GPIO_PIN_RESET)
-    //   HAL_GPIO_WritePin(userLed_GPIO_Port, userLed_Pin, GPIO_PIN_SET);
-    // else
-    //   HAL_GPIO_WritePin(userLed_GPIO_Port, userLed_Pin, GPIO_PIN_RESET);
-
     HAL_GPIO_TogglePin(userLed_GPIO_Port, userLed_Pin);
+
+    if(HAL_GPIO_ReadPin(userButton_GPIO_Port, userButton_Pin) == GPIO_PIN_RESET)
+      printf("Button Pressed!\n");
+    else
+      printf("Hello World!\n");
+
     HAL_Delay(500);
 
     /* USER CODE END WHILE */
